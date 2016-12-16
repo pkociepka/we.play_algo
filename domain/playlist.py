@@ -7,9 +7,9 @@ from domain.tracks import *
 
 
 class Playlist:
-    def __init__(self, params: Params, tracks=[], metric=None):
+    def __init__(self, params: Params, users = [], tracks=[], metric=None):
         self.params = params
-        self.users = []
+        self.users = users
         self.tracks = tracks
         self.metric = metric
 
