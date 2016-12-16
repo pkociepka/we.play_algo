@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '..')
+import os
+sys.path.insert(0, os.getcwd())
 
 from typing import List, Set
 from domain.tracks import *

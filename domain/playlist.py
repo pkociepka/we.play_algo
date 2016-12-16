@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.getcwd())
+
 from domain.user import *
 from domain.tracks import *
 

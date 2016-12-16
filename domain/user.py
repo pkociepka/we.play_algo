@@ -1,5 +1,10 @@
-from domain.tracks import *
+import sys
+import os
+sys.path.insert(0, os.getcwd())
+
 from typing import List
+
+from domain.tracks import *
 
 
 class User:
