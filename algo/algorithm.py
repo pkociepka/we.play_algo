@@ -31,6 +31,13 @@ class Algorithm:
         conn.close()
         self.space = tracks
 
+    def _acc_prob(self, old: float, new: float, temp: float) -> float:
+        # acceptance probability
+        try:
+            return min(exp((new - old) / temp), 1)
+        except OverflowError:
+            return 1
+
     def _neighbour_solution(self, solution: List[Track]) -> List[Track]:
         new_track = sample(self.space, 1).pop()
         while new_track in solution:
@@ -58,3 +65,22 @@ class Algorithm:
 
     def nearest(self, params: Params, size: int):
         return sorted(list(self.space), key=lambda x: x.get_params().distance_from(params))[:size]
+
+    def anneal(self, params: Params, size: int, temp=1.0, t_min=10e-5, alpha=0.9) -> List[Track]:
+        solution = sample(self.space, size)
+        best_solution = copy(solution)
+        best_qty = Metric.quality(Playlist(params, tracks=best_solution, users=self.users), self.space)
+
+        while temp > t_min:
+            new_solution = self._neighbour_solution(copy(solution))
+            old_qty = Metric.quality(Playlist(params, tracks=solution, users=self.users), self.space)
+            new_qty = Metric.quality(Playlist(params, tracks=new_solution, users=self.users), self.space)
+            if rnd() < self._acc_prob(old_qty, new_qty, temp):
+                solution = new_solution
+            if new_qty > best_qty:
+                best_solution = copy(new_solution)
+                best_qty = new_qty
+            temp *= alpha
+
+        return best_solution
+
