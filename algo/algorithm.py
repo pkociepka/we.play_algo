@@ -12,6 +12,7 @@ from domain.playlist import *
 from db.db_hook import DB_Connector
 
 from algo.metric import Metric
+from algo.borda import borda_winners
 
 
 class Algorithm:
@@ -84,3 +85,5 @@ class Algorithm:
 
         return best_solution
 
+    def borda(self, size):
+        return borda_winners(self.space, self.users, size)
