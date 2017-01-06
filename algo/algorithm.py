@@ -22,7 +22,7 @@ class Algorithm:
 
     def _generate_tracks_set(self) -> Set[Track]:
         tracks = set()
-        conn = DB_Connector("mydb")
+        conn = DB_Connector("weplay")
         for user in self.users:
             [tracks.add(x) for x in conn.find_tracks_by_user(user)]
             for artist in user.get_authors():
