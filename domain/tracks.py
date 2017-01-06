@@ -40,21 +40,20 @@ class Params:
 
 
 class Genre:
-    def __init__(self, genre_id, genre_name: str):
-        self.id = genre_id
+    def __init__(self, genre_name: str):
         self.name = genre_name.replace("'", "")
-
-    def get_id(self):
-        return self.id
 
     def get_name(self) -> str:
         return self.name
 
     def __str__(self):
-        return "%s: %s" % (self.id, self.name)
+        return self.name
+
+    def __hash__(self):
+        return hash(self.name)
 
     def __eq__(self, other):
-        return self.id == other.id and self.name == other.name
+        return self.name == other.name
 
 
 class Artist:
@@ -81,6 +80,9 @@ class Artist:
 
     def __str__(self):
         return "%s: %s (%s)" % (self.id, self.name, ", ".join([x.name for x in self.genres]))
+
+    def __hash__(self):
+        return hash(self.id)
 
     def __eq__(self, other):
         return self.id == other.id and self.name == other.name
@@ -127,6 +129,9 @@ class Track:
                 " ".join([x.name for x in self.authors]),
                 " ".join([x.name for x in self.genres]),
                 self.params if self.params else "")
+
+    def __hash__(self):
+        return hash(self.id)
 
     def __eq__(self, other):
         return self.id == other.id and self.name == other.name

@@ -34,3 +34,6 @@ class User:
 
     def get_authors(self) -> List[Artist]:
         return self.authors[:]
+
+    def __hash__(self):
+        return self.id

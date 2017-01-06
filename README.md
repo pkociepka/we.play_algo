@@ -7,7 +7,7 @@
 ```
 git clone https://github.com/pkociepka/we.play_algo
 cd we.play_algo
-set FLASK_APP=/api/endpoint.py
+set FLASK_APP=api/endpoint.py
 python -m flask run
 ```
 
@@ -16,6 +16,6 @@ python -m flask run
 ```
 git clone https://github.com/pkociepka/we.play_algo
 cd we.play_algo
-export FLASK_APP=/api/endpoint.py
+export FLASK_APP=api/endpoint.py
 python -m flask run
 ```

@@ -7,15 +7,20 @@ from flask import request
 
 from api.spotify_sync import *
 
+from algo.algorithm import Algorithm, Params
+
 app = Flask(__name__)
 
 @app.route('/api/playlist', methods=['POST'])
 def create_playlist():
-    return ','.join(['0aym2LBJBk9DAYuHHutrIl', '0hCB0YR03f6AmQaHbwWDe8', '0iOZM63lendWRTTeKhZBSC', '0JQuwvPum9mcIx9yOTq8K9'])
+    form = request.form
+    users = form['users']
+    params = Params(form['danceability'], form['energy'], form['hottness'], form['mood'])
+    return ','.join([x.id for x in Algorithm(users).random(20)])
 
 @app.route('/api/spotify/sync/<token>/<int:expiration>/<username>', methods=['POST'])
 def sync_with_spotify(token, expiration, username):
-    get_user_saved_tracks(username, token)
+    user_saved_tracks(username, token)
     return "OK"
 
 @app.route('/api/redirect')
