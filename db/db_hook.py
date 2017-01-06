@@ -74,8 +74,8 @@ class DB_Connector:
 
     def find_user_id(self, username):
         sql = "SELECT `id` FROM `user` WHERE `login` LIKE '%s'" % username
-        print(sql)
         ids = self._execute(sql)
+        print(ids)
         return int(ids[0][0])
 
     ######################

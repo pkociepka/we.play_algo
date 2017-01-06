@@ -42,4 +42,5 @@ def parse_users(user_names):
     for user_name in user_names:
         user_id = conn.find_user_id(user_name)
         res.append(User(user_id))
+    conn.close()
     return res
