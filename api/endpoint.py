@@ -2,29 +2,22 @@ import sys
 import os
 sys.path.insert(0, os.getcwd())
 
-from algo.algorithm import Algorithm
-
 from flask import Flask
 from flask import request
 
-import spotipy
+from api.spotify_sync import *
 
 app = Flask(__name__)
 
-@app.route('/api/playlist', methods=['GET'])
+@app.route('/api/playlist', methods=['POST'])
 def create_playlist():
-    assert request.args['size'] == '20'
-    assert request.args['users'] == 'u1,u2,u3'
-    assert request.args['danceability'] == '0.1'
-    assert request.args['instrumntalness'] == '0.2'
-    assert request.args['energy'] == '0.3'
-    assert request.args['valence'] == '0.4'
-    return 'Hello, World!'
+    return ','.join(['0aym2LBJBk9DAYuHHutrIl', '0hCB0YR03f6AmQaHbwWDe8', '0iOZM63lendWRTTeKhZBSC', '0JQuwvPum9mcIx9yOTq8K9'])
 
-@app.route('/api/spotify/sync/<token>/<int:expiration>', methods=['POST'])
-def sync_with_spotify(token, expiration):
-    token = {"access_token": token,
-             "token_type": "Bearer",
-             "expires_at": expiration}
-    spotify = spotipy.Spotify(auth=token)
-    return spotify.search("Ravel", type='artist')
+@app.route('/api/spotify/sync/<token>/<int:expiration>/<username>', methods=['POST'])
+def sync_with_spotify(token, expiration, username):
+    get_user_saved_tracks(username, token)
+    return "OK"
+
+@app.route('/api/redirect')
+def redirect():
+    return "Redirection!"
