@@ -21,11 +21,6 @@ def borda_score(track: Track, user: User) -> int:
 
 def borda_points(tracks_set: Set[Track], users: List[User]):
     return {t: {u: borda_score(t, u) for u in users} for t in tracks_set}
-    #
-    # points = {}
-    # for user in users:
-    #     points[user] = {x: [t for t in tracks_set if borda_score(t, user) == x] for x in range(8)}
-    # return points
 
 
 def borda_winners(tracks_set: Set[Track], users: List[User], count: int):
