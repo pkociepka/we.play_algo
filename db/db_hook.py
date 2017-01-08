@@ -40,7 +40,7 @@ class DB_Connector:
                   for x in self._execute(track_sql)}
         # [print(t) for t in tracks.values()]
 
-        artist_sql = """SELECT Artist.id, artist.name, artist_by_track.track_id FROM Artist
+        artist_sql = """SELECT Artist.id, Artist.name, artist_by_track.track_id FROM Artist
                                     JOIN artist_by_track ON artist.id = artist_by_track.artist_id
                                     WHERE artist_by_track.track_id IN ('%s')""" % "','".join(track_ids)
         track_artists = self._execute(artist_sql)
