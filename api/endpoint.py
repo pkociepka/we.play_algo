@@ -17,7 +17,7 @@ def create_playlist():
     form = json.loads(request.data.decode("utf-8"))
     users = parse_users(form['users'])
     params = Params(form['dancability'], form['energy'], form['hottness'], form['mood'])
-    raw_response = ','.join([x.id for x in Algorithm(users).random(20)])
+    raw_response = ','.join([x.id for x in Algorithm(users).borda_pav(20)])
     response = Response()
     response.set_data(raw_response)
     response.headers['Access-Control-Allow-Origin'] = '*'

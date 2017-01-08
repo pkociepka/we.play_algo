@@ -26,3 +26,15 @@ def borda_points(tracks_set: Set[Track], users: List[User]):
 def borda_winners(tracks_set: Set[Track], users: List[User], count: int):
     points = borda_points(tracks_set, users)
     return sorted(tracks_set, key=lambda x: sum(points[x].values()))[:count]
+
+
+def borda_pav_winners(tracks_set: Set[Track], users: List[User], count: int):
+    points = borda_points(tracks_set, users)
+    users_hits = {u: 0 for u in users}
+    res = []
+    for i in range(count):
+        current_best = sorted(tracks_set, key=lambda x: sum([score * (1/(1+users_hits[user])) for (user, score) in points.items()]))
+        res.append(current_best)
+        for user in points[current_best].keys():
+            if points[current_best][user] > 0:
+                users_hits[user] += 1

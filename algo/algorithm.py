@@ -12,7 +12,7 @@ from domain.playlist import *
 from db.db_hook import DB_Connector
 
 from algo.metric import Metric
-from algo.borda import borda_winners
+from algo.borda import borda_winners, borda_pav_winners
 
 
 class Algorithm:
@@ -87,3 +87,7 @@ class Algorithm:
 
     def borda(self, size):
         return borda_winners(self.space, self.users, size)
+
+    def borda_pav(self, size):
+        return borda_pav_winners(self.space, self.users, size)
+
