@@ -33,8 +33,11 @@ def borda_pav_winners(tracks_set: Set[Track], users: List[User], count: int):
     users_hits = {u: 0 for u in users}
     res = []
     for i in range(count):
-        current_best = sorted(tracks_set, key=lambda x: sum([score * (1/(1+users_hits[user])) for (user, score) in points.items()]))
+        current_best = sorted(points.keys(), key=lambda x: sum([score * (1/(1+users_hits[user])) for (user, score) in points[x].items()]))[0]
         res.append(current_best)
         for user in points[current_best].keys():
             if points[current_best][user] > 0:
                 users_hits[user] += 1
+        points.pop(current_best)
+    return res
+
