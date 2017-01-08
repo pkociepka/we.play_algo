@@ -41,7 +41,7 @@ class DB_Connector:
         # [print(t) for t in tracks.values()]
 
         artist_sql = """SELECT Artist.id, Artist.name, artist_by_track.track_id FROM Artist
-                                    JOIN artist_by_track ON artist.id = artist_by_track.artist_id
+                                    JOIN artist_by_track ON Artist.id = artist_by_track.artist_id
                                     WHERE artist_by_track.track_id IN ('%s')""" % "','".join(track_ids)
         track_artists = self._execute(artist_sql)
         artists = {x[0]: Artist(x[0], x[1]) for x in track_artists}
@@ -49,7 +49,7 @@ class DB_Connector:
             tracks[t_a[2]].add_author(artists[t_a[0]])
 
         genre_sql = """SELECT Genre.id, genre_by_track.track_id FROM Genre
-                                            JOIN genre_by_track ON genre.id = genre_by_track.genre_id
+                                            JOIN genre_by_track ON Genre.id = genre_by_track.genre_id
                                             WHERE genre_by_track.track_id IN ('%s')""" % "','".join(track_ids)
         track_genres = self._execute(genre_sql)
         genres = {x[0]: Genre(x[0]) for x in track_genres}
